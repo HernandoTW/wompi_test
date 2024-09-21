@@ -1,4 +1,3 @@
-//Jest for unitaries test
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsService } from './products.service';
