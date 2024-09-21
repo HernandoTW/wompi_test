@@ -1,4 +1,3 @@
-// backend/src/transactions/entities/transaction.entity.ts
 
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
