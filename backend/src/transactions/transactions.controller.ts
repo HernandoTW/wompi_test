@@ -1,3 +1,4 @@
+// backend/src/transactions/transactions.controller.ts
 
 import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
@@ -20,5 +21,10 @@ export class TransactionsController {
     @Body('wompiTransactionId') wompiTransactionId: string,
   ) {
     return this.transactionsService.updateStatus(+id, status, wompiTransactionId);
+  }
+
+  @Post(':id/process-payment')
+  processPayment(@Param('id') id: string, @Body('token') token: string) {
+    return this.transactionsService.processPayment(+id, token);
   }
 }
