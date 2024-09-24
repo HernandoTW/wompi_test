@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node dist/main.js",
     "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:prod": "node src/main.js",
     "build": "tsc",
     "test": "jest",
     "seed:products": "ts-node -r tsconfig-paths/register src/seeds/seed-products.ts"
