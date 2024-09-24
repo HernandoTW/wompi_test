@@ -1,4 +1,3 @@
-// frontend/src/pages/PaymentPage.js
 
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';

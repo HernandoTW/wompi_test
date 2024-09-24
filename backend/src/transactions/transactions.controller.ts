@@ -1,4 +1,3 @@
-// backend/src/transactions/transactions.controller.ts
 
 import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';

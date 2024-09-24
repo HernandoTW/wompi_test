@@ -6,7 +6,7 @@ import { TransactionsController } from './transactions.controller';
 import { Transaction } from './entities/transaction.entity';
 import { ProductsModule } from '../products/products.module';
 import { CustomersModule } from '../customers/customers.module';
-import { WompiModule } from '../wompi/wompi.module'; // Asegúrate de importar WompiModule
+import { WompiModule } from '../wompi/wompi.module';
 
 
 @Module({

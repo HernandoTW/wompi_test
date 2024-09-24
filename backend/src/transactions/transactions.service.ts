@@ -44,18 +44,15 @@ export class TransactionsService {
   }
 
   async updateStatus(id: number, status: TransactionStatus, wompiTransactionId: string): Promise<Transaction> {
-    // Encuentra la transacción por el ID
     const transaction = await this.transactionsRepository.findOne({ where: { id } });
     
     if (!transaction) {
       throw new NotFoundException(`Transaction with ID ${id} not found`);
     }
 
-    // Actualiza el estado de la transacción
     transaction.status = status;
     transaction.wompiTransactionId = wompiTransactionId;
     
-    // Guarda los cambios en la base de datos
     await this.transactionsRepository.save(transaction);
     
     return transaction;
@@ -73,8 +70,7 @@ export class TransactionsService {
         transaction.status = TransactionStatus.COMPLETED;
         transaction.wompiTransactionId = paymentResponse.data.id;
         await this.transactionsRepository.save(transaction);
-        await this.productsService.updateStock(transaction.product.id, 1); // Asumiendo que se compra 1 unidad
-        // Aquí puedes agregar la lógica para asignar el producto al cliente y crear una entrega
+        await this.productsService.updateStock(transaction.product.id, 1);
       } else {
         transaction.status = TransactionStatus.FAILED;
         await this.transactionsRepository.save(transaction);

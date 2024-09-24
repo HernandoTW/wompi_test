@@ -10,8 +10,8 @@ const SummaryPage = () => {
   const dispatch = useDispatch();
   const { product, cardInfo, deliveryInfo } = location.state;
 
-  const baseFee = 500; // Tarifa base fija
-  const deliveryFee = 1000; // Tarifa de entrega fija
+  const baseFee = 500;
+  const deliveryFee = 1000;
   const totalAmount = Number(product.price) + baseFee + deliveryFee;
 
   const handlePayment = async () => {

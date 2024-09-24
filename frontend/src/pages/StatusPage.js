@@ -11,8 +11,7 @@ const StatusPage = () => {
   useEffect(() => {
     const processPayment = async () => {
       try {
-        // Aquí deberías obtener el token de Wompi desde el frontend
-        const token = 'tok_test_visa_4242'; // Token simulado
+        const token = 'tok_test_visa_4242';
         const response = await axios.post(`http://localhost:3000/transactions/${transaction.id}/process-payment`, {
           token,
         });
