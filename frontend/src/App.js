@@ -7,6 +7,7 @@ import SummaryPage from './pages/SummaryPage';
 import StatusPage from './pages/StatusPage';
 import { useDispatch } from 'react-redux';
 import { fetchProducts } from './redux/slices/productsSlice';
+import './global.css';
 
 function App() {
   const dispatch = useDispatch();
