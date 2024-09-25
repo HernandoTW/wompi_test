@@ -8,6 +8,7 @@ const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { product } = location.state;
+  
   const formik = useFormik({
     initialValues: {
       cardNumber: '',
@@ -31,33 +32,47 @@ const PaymentPage = () => {
       email: Yup.string().email('Correo inválido').required('Requerido'),
       address: Yup.string().required('Requerido'),
     }),
-    onSubmit: async (values) => {
-      try {
-        //
-        const paymentData = {
-          token: 'token_mock',
-          amount: product.price * 100, 
-          currency: 'COP',
-        };
 
-        const response = await axios.post('http://localhost:3000/payments', paymentData);
 
-        console.log('Respuesta del backend:', response);
+onSubmit: async (values) => {
+  try {
+    const tokenResponse = await axios.post('https://sandbox.wompi.co/v1/tokens/cards', {
+      number: values.cardNumber,
+      exp_month: values.expiry.split('/')[0],
+      exp_year: `20${values.expiry.split('/')[1]}`,
+      cvc: values.cvv,
+      card_holder: values.name,
+    });
 
-        if (response.status === 200) {
-          navigate('/summary', {
-            state: {
-              product,
-              cardInfo: values,
-              paymentResult: response.data,
-            },
-          });
-        }
-      } catch (error) {
-        console.error('Error en el proceso de pago:', error.message);
-        alert('Hubo un error procesando el pago. Intenta de nuevo.');
-      }
-    },
+    const token = tokenResponse.data.data.id;
+
+    const paymentData = {
+      token: token,
+      amount: product.price * 100,
+      currency: 'COP',
+    };
+
+    const response = await axios.post('http://localhost:3000/payments', paymentData);
+
+    console.log('Respuesta del backend:', response);
+
+    if (response.status === 200) {
+      navigate('/summary', {
+        state: {
+          product,
+          cardInfo: values,
+          paymentResult: response.data,
+        },
+      });
+    }
+  } catch (error) {
+    console.error('Error en el proceso de pago:', error.message);
+    alert('Hubo un error procesando el pago. Intenta de nuevo.');
+  }
+}
+
+
+
   });
 
   return (
@@ -110,9 +125,7 @@ const PaymentPage = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.name && formik.errors.name ? (
-          <div>{formik.errors.name}</div>
-        ) : null}
+        {formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
 
         <input
           type="email"
@@ -122,9 +135,7 @@ const PaymentPage = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.email && formik.errors.email ? (
-          <div>{formik.errors.email}</div>
-        ) : null}
+        {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
 
         <input
           type="text"
@@ -134,9 +145,7 @@ const PaymentPage = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.address && formik.errors.address ? (
-          <div>{formik.errors.address}</div>
-        ) : null}
+        {formik.touched.address && formik.errors.address ? <div>{formik.errors.address}</div> : null}
 
         <button type="submit">Continuar al Resumen</button>
       </form>
