@@ -6,6 +6,10 @@ Description
 
 This project integrates a payment system allowing users to simulate purchases through a frontend interface, while the backend processes payment requests and connects to the database.
 
+Local Frontend: http://localhost:3001/
+Local Backend: http://localhost:3000/
+
+
 Technologies Used
 
 Backend: NestJS
