@@ -3,7 +3,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createTransaction } from '../redux/slices/transactionSlice';
-import './global.css';
+import '../styles/global.css';
 
 const SummaryPage = () => {
   const location = useLocation();
