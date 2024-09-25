@@ -8,7 +8,6 @@ const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { product } = location.state;
-
   const formik = useFormik({
     initialValues: {
       cardNumber: '',
@@ -33,23 +32,30 @@ const PaymentPage = () => {
       address: Yup.string().required('Requerido'),
     }),
     onSubmit: async (values) => {
-      console.log('Formulario enviado, valores:', values);  
       try {
+        //
         const paymentData = {
           token: 'token_mock',
-          amount: product.price * 100,
+          amount: product.price * 100, 
           currency: 'COP',
         };
 
         const response = await axios.post('http://localhost:3000/payments', paymentData);
 
-        console.log('Respuesta del backend:', response);  
+        console.log('Respuesta del backend:', response);
 
         if (response.status === 200) {
-          navigate('/summary', { state: { product, cardInfo: values, paymentResult: response.data } });
+          navigate('/summary', {
+            state: {
+              product,
+              cardInfo: values,
+              paymentResult: response.data,
+            },
+          });
         }
       } catch (error) {
-        console.error('Error en el proceso de pago:', error);
+        console.error('Error en el proceso de pago:', error.message);
+        alert('Hubo un error procesando el pago. Intenta de nuevo.');
       }
     },
   });
@@ -70,6 +76,7 @@ const PaymentPage = () => {
         {formik.touched.cardNumber && formik.errors.cardNumber ? (
           <div>{formik.errors.cardNumber}</div>
         ) : null}
+
         <input
           type="text"
           name="expiry"
@@ -81,6 +88,7 @@ const PaymentPage = () => {
         {formik.touched.expiry && formik.errors.expiry ? (
           <div>{formik.errors.expiry}</div>
         ) : null}
+
         <input
           type="text"
           name="cvv"
@@ -92,6 +100,7 @@ const PaymentPage = () => {
         {formik.touched.cvv && formik.errors.cvv ? (
           <div>{formik.errors.cvv}</div>
         ) : null}
+
         <h2>Información de Entrega</h2>
         <input
           type="text"
@@ -101,7 +110,10 @@ const PaymentPage = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
+        {formik.touched.name && formik.errors.name ? (
+          <div>{formik.errors.name}</div>
+        ) : null}
+
         <input
           type="email"
           name="email"
@@ -110,7 +122,10 @@ const PaymentPage = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
+        {formik.touched.email && formik.errors.email ? (
+          <div>{formik.errors.email}</div>
+        ) : null}
+
         <input
           type="text"
           name="address"
@@ -119,7 +134,10 @@ const PaymentPage = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.address && formik.errors.address ? <div>{formik.errors.address}</div> : null}
+        {formik.touched.address && formik.errors.address ? (
+          <div>{formik.errors.address}</div>
+        ) : null}
+
         <button type="submit">Continuar al Resumen</button>
       </form>
     </div>
