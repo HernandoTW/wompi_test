@@ -10,23 +10,29 @@ async function bootstrap() {
 
   const products: CreateProductDto[] = [
     {
-      name: 'Product 1',
-      description: 'Description Product 1',
+      name: 'Test Product 1',
+      description: 'Description test product 1',
       price: 10000,
       stock: 50,
     },
     {
-      name: 'Product 2',
-      description: 'Description Product 2',
+      name: 'Test Product 2',
+      description: 'Description test product 2',
       price: 20000,
       stock: 30,
     },
     {
-      name: 'Product 3',
-      description: 'Description Product 3',
+      name: 'Test Product 3',
+      description: 'Description test product 3',
       price: 45000,
       stock: 60,
-    },    
+    },
+     {
+      name: 'Test Product 4',
+      description: 'Description test product 4',
+      price: 32000,
+      stock: 8,
+    },       
   ];
 
   for (const product of products) {

@@ -29,7 +29,9 @@ export class WompiService {
       );
       return response.data;
     } catch (error) {
-      throw new HttpException(error.response.data, error.response.status);
+      console.error('Error creating payment:', error.response?.data || error.message);
+      throw new HttpException(error.response?.data || 'Payment error', error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR);      
+      //throw new HttpException(error.response.data, error.response.status);
     }
   }
 }

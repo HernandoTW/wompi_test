@@ -1,8 +1,8 @@
+
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 
 const PaymentPage = () => {
   const location = useLocation();
@@ -32,25 +32,8 @@ const PaymentPage = () => {
       email: Yup.string().email('Correo inválido').required('Requerido'),
       address: Yup.string().required('Requerido'),
     }),
-    onSubmit: async (values) => {
-      console.log('Formulario enviado, valores:', values);  
-      try {
-        const paymentData = {
-          token: 'token_mock',
-          amount: product.price * 100,
-          currency: 'COP',
-        };
-
-        const response = await axios.post('http://localhost:3000/payments', paymentData);
-
-        console.log('Respuesta del backend:', response);  
-
-        if (response.status === 200) {
-          navigate('/summary', { state: { product, cardInfo: values, paymentResult: response.data } });
-        }
-      } catch (error) {
-        console.error('Error en el proceso de pago:', error);
-      }
+    onSubmit: (values) => {
+      navigate('/summary', { state: { product, cardInfo: values, deliveryInfo: values } });
     },
   });
 
