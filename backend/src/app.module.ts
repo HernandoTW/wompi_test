@@ -15,10 +15,13 @@ import { WompiModule } from './wompi/wompi.module';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: process.env.DATABASE_URL,
-      autoLoadEntities: true, 
-      synchronize: process.env.NODE_ENV !== 'production',
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+      host: process.env.DB_HOST || 'localhost',
+      port: +process.env.DB_PORT || 5432,
+      username: process.env.DB_USERNAME || 'postgres',
+      password: process.env.DB_PASSWORD || '010203',
+      database: process.env.DB_NAME || 'wompi_shop',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
     }),
     ProductsModule,
     TransactionsModule,
@@ -28,3 +31,4 @@ import { WompiModule } from './wompi/wompi.module';
   ],
 })
 export class AppModule {}
+
